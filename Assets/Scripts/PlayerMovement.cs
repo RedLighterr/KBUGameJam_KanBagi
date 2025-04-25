@@ -4,15 +4,53 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public float moveSpeed = 5f;
+	public float runMultiplier = 1.3f;
+	float moveMultiplier = 1f;
+	[SerializeField] Rigidbody2D rb;
+	[SerializeField] Animator animator;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	Vector2 movement;
+
+	private void Start()
+	{
+		rb = GetComponent<Rigidbody2D>();
+		animator = GetComponent<Animator>();
+	}
+
+	void Update()
+	{
+		// Input al
+		movement.x = Input.GetAxisRaw("Horizontal");
+		movement.y = Input.GetAxisRaw("Vertical");
+
+		// Animator parametrelerini ayarla
+		animator.SetFloat("Horizontal", movement.x);
+		animator.SetFloat("Vertical", movement.y);
+		animator.SetFloat("Speed", movement.sqrMagnitude);
+	}
+
+	void FixedUpdate()
+	{
+		// Hareketi uygula
+		ApplyMove();
+	}
+
+	void ApplyMove()
+	{
+		float multiplier = 1;
+		animator.speed = 1;
+
+		if (Input.GetKey(KeyCode.LeftShift))
+		{
+			multiplier = runMultiplier;
+		}
+		else
+		{
+			multiplier = moveMultiplier;
+		}
+
+		animator.speed = animator.speed * multiplier;
+		rb.MovePosition(rb.position + movement.normalized * moveSpeed * multiplier * Time.fixedDeltaTime);
+	}
 }
