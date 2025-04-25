@@ -3,7 +3,8 @@ using UnityEngine;
 public enum AreaType
 {
 	Graveyard,
-	StartDoor
+	StartDoor,
+	Empty
 }
 
 public class InterractionArea : MonoBehaviour

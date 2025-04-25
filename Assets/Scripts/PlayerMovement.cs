@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,7 +11,14 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] Rigidbody2D rb;
 	[SerializeField] Animator animator;
 
+	[SerializeField]
+	GameObject youCanInterractObject;
+
 	Vector2 movement;
+
+	// Interractable Area Attributes
+	bool isAreaGraveYard = false;
+	bool isAreaStartDoor = false;
 
 	private void Start()
 	{
@@ -20,6 +28,9 @@ public class PlayerMovement : MonoBehaviour
 
 	void Update()
 	{
+		// Etkileþimi uygula
+		ApplyInterractions();
+
 		// Input al
 		movement.x = Input.GetAxisRaw("Horizontal");
 		movement.y = Input.GetAxisRaw("Vertical");
@@ -54,6 +65,28 @@ public class PlayerMovement : MonoBehaviour
 		rb.MovePosition(rb.position + movement.normalized * moveSpeed * multiplier * Time.fixedDeltaTime);
 	}
 
+	void ApplyInterractions()
+	{
+		if (isAreaStartDoor)
+		{
+			youCanInterractObject.SetActive(true);
+			if (Input.GetKeyUp(KeyCode.E))
+			{
+				SceneManager.LoadScene(1);
+			}
+		}
+		else if (!isAreaStartDoor) youCanInterractObject.SetActive(false);
+
+		if (isAreaGraveYard)
+		{
+			youCanInterractObject.SetActive(true);
+			if (Input.GetKeyUp(KeyCode.E))
+			{
+				Debug.Log("Graveyard");
+			}
+		}
+	}
+
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.gameObject.tag.Contains("InterractionArea"))
@@ -63,15 +96,33 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+		if (collision.gameObject.tag.Contains("InterractionArea"))
+		{
+			TriggerArea(AreaType.Empty);
+		}
+	}
+
 	void TriggerArea(AreaType areaType)
 	{
 		switch (areaType)
 		{
 			case AreaType.Graveyard:
+				isAreaGraveYard = true;
+				isAreaStartDoor = false;
 				break;
 			case AreaType.StartDoor:
+				isAreaGraveYard = false;
+				isAreaStartDoor = true;
+				break;
+			case AreaType.Empty:
+				isAreaGraveYard = false;
+				isAreaStartDoor = false;
 				break;
 			default:
+				isAreaGraveYard = false;
+				isAreaStartDoor = false;
 				break;
 		}
 	}
