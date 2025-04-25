@@ -53,4 +53,26 @@ public class PlayerMovement : MonoBehaviour
 		animator.speed = animator.speed * multiplier;
 		rb.MovePosition(rb.position + movement.normalized * moveSpeed * multiplier * Time.fixedDeltaTime);
 	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.tag.Contains("InterractionArea"))
+		{
+			AreaType areaType = collision.gameObject.GetComponent<InterractionArea>().areaType;
+			TriggerArea(areaType);
+		}
+	}
+
+	void TriggerArea(AreaType areaType)
+	{
+		switch (areaType)
+		{
+			case AreaType.Graveyard:
+				break;
+			case AreaType.StartDoor:
+				break;
+			default:
+				break;
+		}
+	}
 }
