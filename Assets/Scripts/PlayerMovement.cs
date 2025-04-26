@@ -17,9 +17,16 @@ public class PlayerMovement : MonoBehaviour
 	bool isPlayerCanMove = false;
 	int currentDialogIndex = 0;
 
+	[SerializeField]
+	string[] objectives;
+	int currentObjectiveIndex = 0;
+	int deadRatCount = 4;
+
 	[Header("UI Elements")]
 	[SerializeField] GameObject youCanInterractObject;
 	[SerializeField] GameObject textBox;
+	[SerializeField] GameObject objectiveBanner;
+	[SerializeField] TextMeshProUGUI objectiveText;
 	[SerializeField] TextMeshProUGUI textBoxText;
 
 	Vector2 movement;
@@ -30,10 +37,19 @@ public class PlayerMovement : MonoBehaviour
 	bool isAreaStarterDialog = false;
 	bool isAreaDeadRat = false;
 
-	GameObject interractedObject;
+	bool canSpawnFootStep = true;
+
+	[SerializeField] GameObject interractedObject;
+
+	[SerializeField] GameObject[] footstepSounds;
 
 	private void Start()
 	{
+		if (objectiveText != null)
+		{
+			objectiveText.text = objectives[currentObjectiveIndex];
+		}
+
 		rb = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
 	}
@@ -79,10 +95,23 @@ public class PlayerMovement : MonoBehaviour
 
 		animator.speed = animator.speed * multiplier;
 		rb.MovePosition(rb.position + movement.normalized * moveSpeed * multiplier * Time.fixedDeltaTime);
+
+		if (movement.normalized != Vector2.zero)
+		{
+			if (canSpawnFootStep)
+			{
+				SpawnFootsteps(multiplier);
+			}
+		}
 	}
 
 	void ApplyInterractions()
 	{
+		if (Input.GetKeyUp(KeyCode.J))
+		{
+			objectiveBanner.SetActive(!objectiveBanner.activeSelf);
+		}
+
 		if (textBox.activeSelf)
 		{
 			youCanInterractObject.SetActive(false);
@@ -128,9 +157,18 @@ public class PlayerMovement : MonoBehaviour
 			youCanInterractObject.SetActive(true);
 			if (Input.GetKeyUp(KeyCode.E))
 			{
-				if (interractedObject != null)
+				if (interractedObject != null && interractedObject.name.Contains("DeadRat"))
 				{
-					interractedObject.GetComponentInParent<GameObject>().SetActive(false);
+					Destroy(interractedObject.gameObject);
+					deadRatCount--;
+					if (deadRatCount <= 0)
+					{
+						currentObjectiveIndex++;
+						if (currentObjectiveIndex < objectives.Length)
+						{
+							objectiveText.text = objectives[currentObjectiveIndex];
+						}
+					}
 				}
 				youCanInterractObject.SetActive(false);
 			}
@@ -170,6 +208,15 @@ public class PlayerMovement : MonoBehaviour
 			currentDialogIndex = 0;
 			isPlayerCanMove = true;
 		}
+	}
+
+	async void SpawnFootsteps(float multiplier)
+	{
+		canSpawnFootStep = false;
+		Instantiate(footstepSounds[Random.Range(0, footstepSounds.Length)], this.transform.position, Quaternion.identity);
+		await UniTask.WaitForSeconds(0.25f/multiplier);
+
+		canSpawnFootStep = true;
 	}
 
 	void TextBoxFunction(string[] dialogs)
