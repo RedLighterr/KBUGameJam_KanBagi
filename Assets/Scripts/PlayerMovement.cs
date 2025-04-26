@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
 			if (Input.GetKeyUp(KeyCode.E))
 			{
 				string[] dialogs = { "Demek bunlar atalarým.",
-					"Bunu gerçekten yapmak zorunda mýyým?!", 
+					"Bunu gerçekten yapmak zorunda mýyým?!",
 					"Her neyse, þu kaleye bir göz atalým." };
 
 				textBox.SetActive(true);
@@ -168,7 +168,12 @@ public class PlayerMovement : MonoBehaviour
 		if (collision.gameObject.tag.Contains("InterractionArea"))
 		{
 			AreaType areaType = collision.gameObject.GetComponent<InterractionArea>().areaType;
-			TriggerArea(areaType);
+			if (areaType != AreaType.DeadRat)
+				TriggerArea(areaType);
+			else
+			{
+
+			}
 		}
 	}
 
@@ -178,6 +183,11 @@ public class PlayerMovement : MonoBehaviour
 		{
 			TriggerArea(AreaType.Empty);
 		}
+	}
+
+	void CollectableThings()
+	{
+
 	}
 
 	void TriggerArea(AreaType areaType)

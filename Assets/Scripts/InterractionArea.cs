@@ -5,6 +5,8 @@ public enum AreaType
 	Graveyard,
 	StartDoor,
 	StarterDialog,
+	KingChair,
+	DeadRat,
 	Empty
 }
 
