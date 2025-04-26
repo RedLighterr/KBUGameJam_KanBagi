@@ -1,6 +1,4 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundEffectScript : MonoBehaviour
@@ -10,12 +8,12 @@ public class SoundEffectScript : MonoBehaviour
 	private void Awake()
 	{
 		audioSource = GetComponent<AudioSource>();
+		audioSource.Play();
 		DestroyOnEnd();
 	}
 
 	async void DestroyOnEnd()
 	{
-		audioSource.Play();
 		await UniTask.WaitForSeconds(audioSource.clip.length);
 		Destroy(this.gameObject);
 	}

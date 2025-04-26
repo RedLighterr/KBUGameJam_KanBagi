@@ -1,7 +1,4 @@
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -214,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		canSpawnFootStep = false;
 		Instantiate(footstepSounds[Random.Range(0, footstepSounds.Length)], this.transform.position, Quaternion.identity);
-		await UniTask.WaitForSeconds(0.25f/multiplier);
+		await UniTask.WaitForSeconds(0.3f/multiplier);
 
 		canSpawnFootStep = true;
 	}
