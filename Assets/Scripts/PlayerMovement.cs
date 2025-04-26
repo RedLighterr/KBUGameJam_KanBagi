@@ -28,6 +28,9 @@ public class PlayerMovement : MonoBehaviour
 	bool isAreaGraveYard = false;
 	bool isAreaStartDoor = false;
 	bool isAreaStarterDialog = false;
+	bool isAreaDeadRat = false;
+
+	GameObject interractedObject;
 
 	private void Start()
 	{
@@ -120,6 +123,19 @@ public class PlayerMovement : MonoBehaviour
 			}
 		}
 
+		if (isAreaDeadRat)
+		{
+			youCanInterractObject.SetActive(true);
+			if (Input.GetKeyUp(KeyCode.E))
+			{
+				if (interractedObject != null)
+				{
+					interractedObject.GetComponentInParent<GameObject>().SetActive(false);
+				}
+				youCanInterractObject.SetActive(false);
+			}
+		}
+
 		if (isAreaStarterDialog)
 		{
 			youCanInterractObject.SetActive(true);
@@ -142,7 +158,7 @@ public class PlayerMovement : MonoBehaviour
 			}
 		}
 
-		if (!isAreaStartDoor && !isAreaGraveYard && !isAreaStarterDialog)
+		if (!isAreaStartDoor && !isAreaGraveYard && !isAreaStarterDialog && !isAreaDeadRat)
 		{
 			currentDialogIndex = 0;
 			youCanInterractObject.SetActive(false);
@@ -168,12 +184,8 @@ public class PlayerMovement : MonoBehaviour
 		if (collision.gameObject.tag.Contains("InterractionArea"))
 		{
 			AreaType areaType = collision.gameObject.GetComponent<InterractionArea>().areaType;
-			if (areaType != AreaType.DeadRat)
-				TriggerArea(areaType);
-			else
-			{
-
-			}
+			TriggerArea(areaType);
+			interractedObject = collision.gameObject;
 		}
 	}
 
@@ -182,11 +194,13 @@ public class PlayerMovement : MonoBehaviour
 		if (collision.gameObject.tag.Contains("InterractionArea"))
 		{
 			TriggerArea(AreaType.Empty);
+			interractedObject = null;
 		}
 	}
 
-	void CollectableThings()
+	void CollectableThings(AreaType areaType, GameObject gameObject)
 	{
+		TriggerArea(areaType);
 
 	}
 
@@ -198,26 +212,37 @@ public class PlayerMovement : MonoBehaviour
 				isAreaGraveYard = true;
 				isAreaStartDoor = false;
 				isAreaStarterDialog = false;
+				isAreaDeadRat = false;
 				break;
 			case AreaType.StartDoor:
 				isAreaGraveYard = false;
 				isAreaStartDoor = true;
 				isAreaStarterDialog = false;
+				isAreaDeadRat = false;
 				break;
 			case AreaType.StarterDialog:
 				isAreaGraveYard = false;
 				isAreaStartDoor = false;
 				isAreaStarterDialog = true;
+				isAreaDeadRat = false;
+				break;
+			case AreaType.DeadRat:
+				isAreaGraveYard = false;
+				isAreaStartDoor = false;
+				isAreaStarterDialog = false;
+				isAreaDeadRat = true;
 				break;
 			case AreaType.Empty:
 				isAreaGraveYard = false;
 				isAreaStartDoor = false;
 				isAreaStarterDialog = false;
+				isAreaDeadRat = false;
 				break;
 			default:
 				isAreaGraveYard = false;
 				isAreaStartDoor = false;
 				isAreaStarterDialog = false;
+				isAreaDeadRat = false;
 				break;
 		}
 	}
