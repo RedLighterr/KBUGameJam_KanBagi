@@ -4,6 +4,7 @@ public enum AreaType
 {
 	Graveyard,
 	StartDoor,
+	StarterDialog,
 	Empty
 }
 
