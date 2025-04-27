@@ -7,6 +7,8 @@ public enum AreaType
 	StarterDialog,
 	KingChair,
 	DeadRat,
+	ChestRoomDoor,
+	Sword,
 	Empty
 }
 
