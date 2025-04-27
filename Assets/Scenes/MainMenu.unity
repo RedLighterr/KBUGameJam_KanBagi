@@ -32503,13 +32503,43 @@ MonoBehaviour:
   rb: {fileID: 4697734736534361637}
   animator: {fileID: 4055472874621874225}
   objectives:
-  - 123
+  - "\xD6l\xFC Farelerden Kurtul"
+  - "Sand\u0131k Odas\u0131na Git"
+  - "K\u0131l\u0131c\u0131 Al"
+  - "Sand\u0131k Odas\u0131n\u0131n\u0131 Yarat\u0131klardan Ar\u0131nd\u0131r"
   youCanInterractObject: {fileID: 3182338125764315477}
   textBox: {fileID: 3948954483399351790}
   objectiveBanner: {fileID: 0}
   objectiveText: {fileID: 0}
   textBoxText: {fileID: 2533066665499409064}
+  sword: {fileID: 0}
   interractedObject: {fileID: 0}
+  footstepSounds:
+  - {fileID: 4526915669386509790, guid: 03b22a4482dc648448e032a458225bb9, type: 3}
+  - {fileID: 6862923970922661684, guid: b195cb7667e54e44db3e2d6fd3597e68, type: 3}
+  - {fileID: 8197509908377783559, guid: 4e73b41f4827707488d463501e41c854, type: 3}
+  - {fileID: 1272065870564763901, guid: a2510c8f082351d4d83bb1c065358ac2, type: 3}
+  - {fileID: 880427180760333391, guid: acee62a0b2bb9f345ad78543ddbbaaad, type: 3}
+  - {fileID: 4745657846628675457, guid: f1263cb5a0a027b42b32211142de1f92, type: 3}
+  keyPressedSounds:
+  - {fileID: 1938488312258232238, guid: 26580969ea39dbe4da3b229eb74062ca, type: 3}
+  - {fileID: 7691872917842805243, guid: 40d56685ee1fb6b45b275a40bd25c226, type: 3}
+  - {fileID: 4987692468960907648, guid: 14b0cb73c94aa964a86abdf01a0a6638, type: 3}
+  doorSounds:
+  - {fileID: 1462704169336668456, guid: d9139dcffc63ac34e9b88f364c2f80cb, type: 3}
+  - {fileID: 1125495032931593089, guid: 2e30cd77a0e57a740b02e5d0f1de2e33, type: 3}
+  - {fileID: 6801084990074240295, guid: 156d2e9eae4257646bd17767fd3fbe33, type: 3}
+  - {fileID: 1703322749401353769, guid: 7a287b72d5c555f489437f3c07bb3117, type: 3}
+  locations:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  chestRoomBounds:
+    m_Center: {x: 6, y: 11, z: 0}
+    m_Extent: {x: 9, y: 12, z: 0}
+  castleBounds:
+    m_Center: {x: 0, y: 11, z: 0}
+    m_Extent: {x: 15, y: 20, z: 0}
 --- !u!224 &6486421449404641108
 RectTransform:
   m_ObjectHideFlags: 0

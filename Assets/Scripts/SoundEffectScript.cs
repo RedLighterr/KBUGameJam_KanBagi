@@ -15,6 +15,17 @@ public class SoundEffectScript : MonoBehaviour
 	async void DestroyOnEnd()
 	{
 		await UniTask.WaitForSeconds(audioSource.clip.length);
-		Destroy(this.gameObject);
+
+		try
+		{
+			if (this.gameObject != null)
+			{
+				Destroy(this.gameObject);
+			}
+		}
+		catch (System.Exception)
+		{
+
+		}
 	}
 }

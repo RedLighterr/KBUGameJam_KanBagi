@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 			objectiveText.text = objectives[currentObjectiveIndex];
 		}
 
-		Camera.main.GetComponent<CameraFollow>().cameraBounds = castleBounds;
+		//Camera.main.GetComponent<CameraFollow>().cameraBounds = castleBounds;
 
 		rb = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
@@ -158,7 +158,7 @@ public class PlayerMovement : MonoBehaviour
 			{
 				if (canSpawnClickSound) { SpawnClickSounds(); }
 				isPlayerCanMove = false;
-				SceneManager.LoadScene(1);
+				SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
 			}
 		}
 
